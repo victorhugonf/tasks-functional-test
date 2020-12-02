@@ -4,27 +4,35 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
 
-    private WebDriver acessarAplicacao() {
-        File file = new File("D:\\UDEMY\\Devops-CI-CD-Jenkins\\chromedriver_win32\\chromedriver.exe");
-        ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(file).build();
-        WebDriver driver = new ChromeDriver(service);
-
+    private WebDriver acessarAplicacao() throws MalformedURLException {
+        WebDriver driver = obterWebDriver();
         driver.navigate().to("http://localhost:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
 
+    private WebDriver obterWebDriver() throws MalformedURLException {
+        //Necessário definir o executável do driver para que funcione no Jenkins
+        //File file = new File("D:\\UDEMY\\Devops-CI-CD-Jenkins\\chromedriver_win32\\chromedriver.exe");
+        //ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(file).build();
+        //return new ChromeDriver(service);
+
+        //Implementação utilizando Selenium grid
+        return new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"), new ChromeOptions());
+    }
+
     @Test
-    public void deveSalvarTarefaComSucesso() {
+    public void deveSalvarTarefaComSucesso() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -51,7 +59,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaSemDescricao() {
+    public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -75,7 +83,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaSemData() {
+    public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
@@ -98,7 +106,7 @@ public class TasksTest {
     }
 
     @Test
-    public void naoDeveSalvarTarefaComDataPassada() {
+    public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
         WebDriver driver = acessarAplicacao();
 
         try {
