@@ -17,7 +17,7 @@ public class TasksTest {
     private WebDriver acessarAplicacao() throws MalformedURLException {
         WebDriver driver = obterWebDriver();
         driver.navigate().to("http://localhost:8001/tasks/");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return driver;
     }
 
