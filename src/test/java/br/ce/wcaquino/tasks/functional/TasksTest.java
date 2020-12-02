@@ -14,9 +14,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
 
+    private static final String MEU_IP = "192.168.86.10";
+
     private WebDriver acessarAplicacao() throws MalformedURLException {
         WebDriver driver = obterWebDriver();
-        driver.navigate().to("http://localhost:8001/tasks/");
+        driver.navigate().to(String.format("http://%s:8001/tasks/", MEU_IP));
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         return driver;
     }
@@ -28,7 +30,7 @@ public class TasksTest {
         //return new ChromeDriver(service);
 
         //Implementação utilizando Selenium grid
-        return new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"), new ChromeOptions());
+        return new RemoteWebDriver(new URL(String.format("http://%s:4444/wd/hub", MEU_IP)), new ChromeOptions());
     }
 
     @Test
