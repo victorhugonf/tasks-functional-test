@@ -1,19 +1,23 @@
 package br.ce.wcaquino.tasks.functional;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 public class TasksTest {
 
-    public WebDriver acessarAplicacao() {
-        WebDriver driver = new ChromeDriver();
+    private WebDriver acessarAplicacao() {
+        File file = new File("D:\\UDEMY\\Devops-CI-CD-Jenkins\\chromedriver_win32\\chromedriver.exe");
+        ChromeDriverService service = new ChromeDriverService.Builder().usingDriverExecutable(file).build();
+        WebDriver driver = new ChromeDriver(service);
+
         driver.navigate().to("http://localhost:8001/tasks/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
