@@ -22,7 +22,7 @@ public class WebDriverFactory {
     public WebDriver acessarAplicacao(Integer porta) throws MalformedURLException {
         WebDriver driver = obterWebDriver();
         driver.navigate().to(String.format("http://%s:%s/tasks/", MEU_IP, porta.toString()));
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         return driver;
     }
 
